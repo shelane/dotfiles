@@ -1,0 +1,25 @@
+## Setting up sane default to help keep my repos clean
+*.orig
+*.patch
+.DS_Store
+.sass-cache/*
+*.taskpaper
+*.tp
+*.idea
+*.swp
+
+# drupal dev sites
+*.dev
+*.ld
+settings.local.php
+local.settings.php
+# not sure if this is a good idea
+docroot/sites/default/files/
+FirePHPCore/
+FirePHPCore/*
+*.sql.gz
+*.sql
+
+# Name a module directory dev.hide for things like coder and devel if they
+# are not in the site repo.
+dev.hide

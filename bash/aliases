@@ -1,0 +1,333 @@
+# Set the TERM of the remote machine to xterm-256. Needed for the italic local
+# TERM I use.
+alias ssh='TERM=xterm-256color ssh'
+
+#Bret Terpstra
+#copy the working directory path
+alias cpwd='pwd|tr -d "\n"|pbcopy'
+
+# Make file executable.
+alias ax='chmod +x'
+
+# http://brettterpstra.com/2011/12/28/a-simple-but-handy-bash-function-console
+function console () {
+  if [[ $# > 0 ]]; then
+    query=$(echo "$*"|tr -s ' ' '|')
+    tail -f /var/log/system.log|grep -i --color=auto -E "$query"
+  else
+    tail -f /var/log/system.log
+  fi
+}
+
+# Common -- Some are from Damian Conway
+alias c='clear'
+alias cdd='cd -'  # goto last dir cd'ed from
+alias cl='clear; l'
+function cdc() {
+    cd $1; ls
+}
+alias cls='clear; ls'
+alias h='history'
+
+#share history between terminal sessions
+alias he="history -a" # export history
+alias hi="history -n" # import history
+
+
+alias a='ls -A' # -A all except literal . ..
+alias la="ls -AlGh"
+alias l.='ls -d .[^.]*'
+alias l='ls -lhGt'  # -l long listing, most recent first
+                    # -G color
+alias lh="ls -lh"
+alias ll='ls -lhG'  # -l long listing, human readable, no group info
+alias lt='ls -lt' # sort with recently modified first
+alias md='mkdir -p'
+
+# Easier navigation: ..
+alias ..="cd .."
+alias cd..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+# ls with grep
+function lg() {
+    ls | grep $1
+}
+
+function mkgo() {
+    mkdir -p "$1"
+    cd "$1"
+}
+
+alias e='exit'
+alias k9="killall -9"
+function killnamed () {
+    ps ax | grep $1 | cut -d ' ' -f 2 | xargs kill
+}
+# recursively zips all files in a directory. Example: $zipr nameofdirectory
+function zipr() {
+  zip -r $1.zip $1
+}
+
+# zips every files in your current directory with the current name of each file and deletes the the original file.
+# Thanks to Steven Frank for this. http://stevenf.tumblr.com/post/1200983113/this-terminal-command-will-turn-every-file-in-the
+alias zipall='for item in *; do zip -m "${item}.zip" "${item}"; done'
+
+# Finder
+alias o='open . &'
+alias ff='open -a Firefox'
+alias chrome='open -a Google\ Chrome'
+alias f='open .'
+
+# General code
+
+# Processes
+alias topu='top -o cpu' # cpu
+alias topp='top -o vsize' # memory
+
+# Git
+alias ungit="find . -name '.git' -exec rm -rf {} \;"
+alias gb='git branch'
+alias gba='git branch -a'
+alias gc='git commit -v'
+alias gca='git commit -v -a'
+alias gf='git fetch'
+
+# Commit pending changes and quote all args as message
+function gg() {
+    git commit -v -a -m "$*"
+}
+alias gco='git checkout'
+alias gcod='git checkout develop'
+alias gcob='git checkout -b'
+alias gd='git diff'
+alias gdm='git diff master'
+function gdx() {
+  git diff $1 $2 | gitx
+}
+alias gl='git pull'
+# https://github.com/chrisk/git-extras
+alias gnp="git-notpushed"
+alias gp='git push'
+alias g='git status'
+alias ga-modified="git status | grep modified | cut -d':' -f2 | xargs git add"
+
+# Get and merge upstream repo
+alias gups='git fetch upstream && git merge upstream/master'
+alias eg='subl .git/config'
+alias egg='subl ~/.gitconfig'
+
+# Lists all merged branches and deletes the local branchs
+alias gclean="git branch --merged | grep -v -i -E 'master|develop' | xargs -n 1 git branch -d"
+
+function glg() {
+  git log --author="$1" --decorate
+}
+
+function gi() {
+  curl http://www.gitignore.io/api/$@ ;
+}
+
+# Git clone from GitHub
+function gch() {
+  git clone git://github.com/$1/$2.git
+}
+
+# Setup a tracking branch from [remote] [branch_name]
+# EXAMPLE gbt remote branch_name
+function gbt() {
+  git branch --track $2 $1/$2 && git checkout $2
+}
+# Quickly clobber a file and checkout
+function grf() {
+  rm $1
+  git checkout $1
+}
+# Call from inside an initialized Git repo, with the name of the repo.
+function new-git() {
+  ssh git@example.com "mkdir $1.git && cd $1.git && git --bare init"
+  git remote add origin git@example.com:$1.git
+  git push origin master
+  git config branch.master.remote origin
+  git config branch.master.merge refs/heads/master
+  git config push.default current
+}
+
+#Git Flow
+alias gff='git flow feature start'
+
+alias stree='open -a SourceTree $(pwd)'
+
+# Setup a tunnel
+function haproxyssh() {
+  ssh -L7997:127.0.0.1:7997 deploy@$1.com
+}
+
+# Syntax check Javascript
+function jsc() {
+  jsl -conf /etc/jsl/jsl.conf -process $1
+}
+
+alias nr='npm run'
+
+function aiff2mp3() {
+  lame -h -V 0 $1.aif $1.mp3
+}
+function wav2mp3() {
+  lame -h -V 0 $1.wav $1.mp3
+}
+
+# Update Vhosts
+alias vhost="sudo subl /etc/apache2/extra/httpd-vhosts.conf"
+
+# Apache Restart
+alias apacherestart="sudo apachectl -k restart"
+
+# Nginx
+# sudo $(brew --prefix)/sbin/nginx -s stop
+function nginx_stop() {
+  sudo nginx -s stop
+}
+function nginx_start() {
+  sudo /usr/local/sbin/nginx
+}
+function nginx_reload() {
+  sudo nginx -s reload
+}
+
+# TaskPaper
+function ntp() {
+    touch $1.taskpaper
+    subl $1.taskpaper
+}
+
+# [Create and] open project todo
+# If you don't pass a name as an argument, it's pulled from the directory name
+td() {
+  if [[ -n $1 ]]; then
+    proj=$1
+    todofile=$proj.taskpaper
+  else
+    proj=${PWD##*/}
+    todofile=$proj.taskpaper
+    todofile=${todofile#.}
+  fi
+  if [ ! -e $todofile ]; then
+    touch $todofile
+    echo -e "Inbox:\n$proj:\n\tNew Features:\n\tIdeas:\n\tBugs:\nArchive:\nSearch Definitions:\n\tTop Priority @search(@priority = 5 and not @done)\n\tHigh Priority @search(@priority > 3 and not @done)\n\tMaybe @search(@maybe)\n\tNext @search(@na and not @done and not project = \"Archive\")\n" >> $todofile
+  fi
+  subl $todofile
+}
+
+# From http://github.com/suztomo/dotfiles
+function rmf(){
+    for file in $*
+    do
+        __rm_single_file $file
+    done
+}
+
+function __rm_single_file(){
+    if ! [ -d ~/.Trash/ ]
+    then
+        command /bin/mkdir ~/.Trash
+    fi
+
+    if ! [ $# -eq 1 ]
+    then
+        echo "__rm_single_file: 1 argument required but $# passed."
+        exit
+    fi
+
+    if [ -e $1 ]
+    then
+        BASENAME=`basename $1`
+        NAME=$BASENAME
+        COUNT=0
+        while [ -e ~/.Trash/$NAME ]
+        do
+            COUNT=$(($COUNT+1))
+            NAME="$BASENAME.$COUNT"
+        done
+
+        command /bin/mv $1 ~/.Trash/$NAME
+    else
+        echo "No such file or directory: $file"
+    fi
+}
+
+# Create db for new Drupal site.
+function ddb() {
+  mysql -u root -p -e "CREATE DATABASE $1 CHARACTER SET utf8 COLLATE utf8_general_ci;"
+}
+
+# Import a compressed database using Drush.
+function dimport() {
+  echo "Dropping current database."
+  drush sql-drop
+  echo "Importing database from $1"
+  gunzip -c $1 | drush sqlc
+  echo "Database imported. Rebuiling registry now."
+  drush rr
+  echo "unblocking user ID 1"
+  drush uublk 1
+  echo "Logging you in now."
+  drush uli
+}
+
+#Grunt
+alias grunt='/usr/local/share/npm/bin/grunt'
+
+# Go lang s search tool.
+alias s="~/golang/bin/s"
+alias sa="s -p amazon"
+alias sw="s -p wikipedia"
+alias si="s -p imdb"
+alias ss="s -p stackoverflow"
+alias sy="s -p youtube"
+
+# Get readable list of network IPs
+alias ips="ifconfig -a | perl -nle'/(\d+\.\d+\.\d+\.\d+)/ && print $1'"
+alias myip="dig +short myip.opendns.com @resolver1.opendns.com"
+
+# l(ist)ips Get local and WAN IP adddresses
+# $ lips
+#    Local IP: 10.0.1.4
+# External IP: 41.32.11.102
+lips() {
+    local ip=`ifconfig en0 | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}'`
+    local locip extip
+
+    [ "$ip" != "" ] && locip=$ip || locip="inactive"
+
+    ip=`dig +short myip.opendns.com @resolver1.opendns.com`
+    [ "$ip" != "" ] && extip=$ip || extip="inactive"
+
+    printf '%11s: %s\n%11s: %s\n' "Local IP" $locip "External IP" $extip
+}
+
+alias flush="dscacheutil -flushcache" # Flush DNS cache
+alias dnslocal="sudo networksetup -setdnsservers Wi-Fi 10.10.10.21"
+alias dnsgoogle="sudo networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4"
+alias dnsopen="sudo networksetup -setdnsservers Wi-Fi 208.67.222.222 208.67.220.220"
+alias dnsmlb="sudo networksetup -setdnsservers Wi-Fi 192.169.71.180 192.254.74.201 208.110.81.51"
+alias speedtest='wget -O /dev/null http://speedtest.wdc01.softlayer.com/downloads/test10.zip'
+alias vpnfix="sudo ifconfig en0 down && sudo route flush && sudo ifconfig en0 up"
+
+alias gzip="gzip -9n" # set strongest compression level as ‘default’ for gzip
+alias ping="ping -c 5" # ping 5 times ‘by default’
+alias ql="qlmanage -p 2>/dev/null" # preview a file using QuickLook
+
+# fin
+alias frush='fin drush'
+alias fehat='fin behat'
+alias fomposer='fin exec composer'
+
+# Networking
+alias hosts='sudo nano /private/etc/hosts'
+alias dns='sudo nano /etc/resolv.dnsmasq.conf'
+alias dnsconf='sudo nano /usr/local/etc/dnsmasq.conf'
+alias dnsreload='sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist && sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist'
+alias wifi="networksetup -setairportpower en1"

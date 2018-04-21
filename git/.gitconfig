@@ -1,0 +1,81 @@
+[core]
+  editor = vim
+	excludesfile = ~/.gitignore
+	quotepath = false
+  # diff-highlight http://theunixtoolbox.com/git-diff-highlight/
+  pager = diff-highlight | less -r
+[color]
+  ui = true
+  [color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+  [color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+  [color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+[push]
+  default = current
+[alias]
+  br = branch
+  ci = commit
+  co = checkout
+  datetag = !git tag `date "+%Y_%m_%d_%H%M"`
+  df = diff
+  # Show modified files in last commit.
+  diffall = diff HEAD
+  diffstaged = diff --staged
+  nextrelease = log origin/develop ^origin/master --no-merges
+  dl = "!git ll -1"
+  # Show a diff last commit.
+  dlc = diff --cached HEAD^
+  filelog = log --oneline --no-merges --
+  fl = log -u
+  init = init --template ~/.git_template
+  # List oneline commits showing relative dates.
+  ld = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=relative
+  # List oneline commits showing dates.
+  lds = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+  lg = log -p
+  # List commits showing changed files is invoked with git ll and looks like this.
+  ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+  logm = log --author="kepford" --decorate
+  lol = log --graph --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+  lola = log --graph --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --all
+  lolm = log --author="kepford" --decorate --pretty=oneline --abbrev-commit
+  ls = ls-files
+  # Copies today's commits by me on a branch.
+  mc = "!git log --since=6am --author="kepford" --decorate --abbrev-commit | grep -vwE \"(Author:|Date:)\" | pbcopy | pbpaste | cat"
+  sa = stash apply
+  sl = stash list
+  ss = stash save
+  st = status
+  # Commits on current branch. Assumes the branch was created from develop.
+  thisbranch = log --no-merges develop..
+  undolast = reset --soft Head^
+  unstage = reset HEAD
+
+  # diff-highlight http://theunixtoolbox.com/git-diff-highlight/
+  worddiff = !git diff --color | diff-highlight | less -r
+[apply]
+  whitespace = nowarn
+[branch]
+  autosetuprebase = always
+[pull]
+	rebase = true
+[init]
+	templatedir = ~/.git_template
+[merge]
+	tool = vimdiff
+[mergetool]
+	prompt = false
+	keepBackup = true
+[diff]
+	tool = vimdiff
+[include]
+    path = ~/.gitconfig_local
