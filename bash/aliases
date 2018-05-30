@@ -50,6 +50,7 @@ alias cd..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
+alias home="cd ~"
 
 # ls with grep
 function lg() {
