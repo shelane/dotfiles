@@ -325,10 +325,6 @@ alias ql="qlmanage -p 2>/dev/null" # preview a file using QuickLook
 alias frush='fin drush'
 alias fehat='fin behat'
 alias fomposer='fin exec composer'
-function fsync(){
-  fin project remove unison
-  fin project start
-}
 
 # Networking
 alias hosts='sudo nano /private/etc/hosts'
