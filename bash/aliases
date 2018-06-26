@@ -322,6 +322,7 @@ alias ping="ping -c 5" # ping 5 times ‘by default’
 alias ql="qlmanage -p 2>/dev/null" # preview a file using QuickLook
 
 # fin
+alias flt='fin exec /var/www/vendor/bin/blt "$@"'
 alias frush='fin drush'
 alias fehat='fin behat'
 alias fomposer='fin exec composer'
