@@ -127,6 +127,10 @@ function glg() {
   git log --author="$1" --decorate
 }
 
+function grn() {
+  git log "${1}"..."${2}" --oneline --reverse --pretty="format:%s"
+}
+
 function gi() {
   curl http://www.gitignore.io/api/$@ ;
 }
