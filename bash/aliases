@@ -128,7 +128,14 @@ function glg() {
 }
 
 function grn() {
-  git log "${1}"..."${2}" --oneline --reverse --pretty="format:%s"
+  git log "${1}".."${2}" --oneline --reverse --pretty="format:%s"
+}
+
+function grnl() {
+  firstTag=$(git tag | sort -r | head -1)
+  secondTag=$(git tag | sort -r | head -2 | awk '{split($0, tags, "\n")} END {print tags[1]}')
+  echo "Changes between ${secondTag} and ${firstTag}\n"
+  git log "${secondTag}".."${firstTag}" --oneline --reverse --pretty=format:' * %s'
 }
 
 function gi() {
