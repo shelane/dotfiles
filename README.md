@@ -1,23 +1,5 @@
 # .Dot files
 
-## Features
-
-* Homebrew
-* Bash
-* Vim
-* Git
-* Drupal
-* Tmux
-* osx
-
-## Installation
-
-### Homebrew
-
-Install [Homebrew](http://brew.sh/)
-
-`/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
-
 
 ### Symlinks and home directory
 
@@ -31,20 +13,17 @@ On different systems you may have a `.bash_profile`, `.bashrc` and `.profile` fi
 if [ -f ~/.bashrc ];
 then
     source ~/.bashrc
-    fi
+fi
 ```
 
 **.bashrc**
 
 ```
-. ~/bin/dotfiles/bashrc
+. ~/bin/dotfiles/bash/env
+. ~/bin/dotfiles/bash/config
+. ~/bin/dotfiles/bash/aliases
 ```
 
-**.profile**
-
-```
-. ~/.bashrc
-```
 
 **Git**
 
@@ -57,30 +36,4 @@ Symlink the following files/directories to the dotfiles directory.
 .gitignore -> /Users/yourusername/bin/dotfiles/git/.gitignore
 git-completion.bash -> /Users/yourusername/bin/dotfiles/git/git-completion.bash
 git-flow-completion.bash -> /Users/yourusername/bin/dotfiles/git/git-flow-completion.bash
-```
-
-**Vim**
-
-Symlink the following files/directories to the dotfiles directory.
-
-```
-.gvimrc -> /Users/yourusername/bin/dotfiles/vim/gvimrc
-.vim -> /Users/yourusername/bin/dotfiles/vim
-.vimrc -> /Users/yourusername/bin/dotfiles/vim/vimrc
-```
-
-**Tmux**
-
-Symlink the following files/directories to the dotfiles directory.
-
-```
-.tmux.conf -> /Users/yourusername/bin/dotfiles/tmux/tmux.conf
-```
-
-**Drupal Console**
-
-Symlink the following files/directories to the dotfiles directory.
-
-```
-.console -> /Users/yourusername/bin/dotfiles/drupal_console
 ```
