@@ -1,25 +1,45 @@
-## Setting up sane default to help keep my repos clean
-*.orig
-*.patch
-.DS_Store
-.sass-cache/*
-*.taskpaper
-*.tp
-*.idea
-*.swp
+# Forked from octocat/.gitignore
+# For local global gitignore settings, create this file as `~/.gitignore_global` and run
+# `git config --global core.excludesfile ~/.gitignore_global`
 
-# drupal dev sites
-*.dev
-*.ld
-settings.local.php
-local.settings.php
-# not sure if this is a good idea
-docroot/sites/default/files/
-FirePHPCore/
-FirePHPCore/*
-*.sql.gz
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
 *.sql
+*.sqlite
 
-# Name a module directory dev.hide for things like coder and devel if they
-# are not in the site repo.
-dev.hide
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE generated files #
+######################
+.idea
