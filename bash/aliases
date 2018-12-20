@@ -337,6 +337,9 @@ alias flt='fin exec /var/www/vendor/bin/blt "$@"'
 alias frush='fin drush'
 alias fehat='fin behat'
 alias fomposer='fin exec composer'
+upfin () { 
+  export PATH="$HOME/Projects/docksal/docksal/bin:$PATH"
+}
 
 # Networking
 alias hosts='sudo nano /private/etc/hosts'
