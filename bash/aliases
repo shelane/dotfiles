@@ -111,7 +111,8 @@ function gdx() {
 alias gl='git pull'
 # https://github.com/chrisk/git-extras
 alias gnp="git-notpushed"
-alias gp='git push'
+alias gp='git push origin HEAD'
+alias gpf='git push -f origin HEAD'
 alias g='git status'
 alias ga-modified="git status | grep modified | cut -d':' -f2 | xargs git add"
 
