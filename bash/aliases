@@ -35,12 +35,12 @@ alias hi="history -n" # import history
 
 
 alias a='ls -A' # -A all except literal . ..
-alias la="ls -AlGh"
+alias la="ls -Alh"
 alias l.='ls -d .[^.]*'
-alias l='ls -lhGt'  # -l long listing, most recent first
+alias l='ls -lht'  # -l long listing, most recent first
                     # -G color
 alias lh="ls -lh"
-alias ll='ls -lhG'  # -l long listing, human readable, no group info
+alias ll='ls -lh'  # -l long listing, human readable
 alias lt='ls -lt' # sort with recently modified first
 alias md='mkdir -p'
 
