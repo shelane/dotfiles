@@ -129,7 +129,7 @@ function glg() {
 }
 
 function grn() {
-  git log "${1}".."${2}" --oneline --reverse --pretty="format:%s"
+  git log "${1}".."${2}" --oneline --no-merges --reverse --pretty="format:%s"
 }
 
 function grnl() {
