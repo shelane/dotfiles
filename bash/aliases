@@ -103,6 +103,7 @@ function gg() {
 alias gco='git checkout'
 alias gcod='git checkout develop'
 alias gcob='git checkout -b'
+alias gcl='git checkout .'
 alias gd='git diff'
 alias gdm='git diff master'
 function gdx() {
